@@ -23,6 +23,7 @@ use Happyr\DoctrineSpecification\Query\LeftJoin;
 use Happyr\DoctrineSpecification\Query\Limit;
 use Happyr\DoctrineSpecification\Query\Offset;
 use Happyr\DoctrineSpecification\Query\OrderBy;
+use Happyr\DoctrineSpecification\Query\OrderByRand;
 use Happyr\DoctrineSpecification\Query\Slice;
 use Happyr\DoctrineSpecification\Result\AsArray;
 use Happyr\DoctrineSpecification\Result\AsSingleScalar;
@@ -154,6 +155,11 @@ class Spec
     public static function orderBy($field, $order = 'ASC', $dqlAlias = null)
     {
         return new OrderBy($field, $order, $dqlAlias);
+    }
+
+    public static function orderByRand()
+    {
+        return new OrderByRand();
     }
 
     /**
