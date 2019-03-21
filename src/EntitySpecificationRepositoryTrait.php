@@ -4,6 +4,7 @@ namespace Happyr\DoctrineSpecification;
 
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Happyr\DoctrineSpecification\Filter\Filter;
 use Happyr\DoctrineSpecification\Query\QueryModifier;
@@ -23,7 +24,7 @@ trait EntitySpecificationRepositoryTrait
      * Get results when you match with a Specification.
      *
      * @param Filter|QueryModifier $specification
-     * @param ResultModifier       $modifier
+     * @param ResultModifier|null  $modifier
      *
      * @return mixed[]
      */
@@ -38,7 +39,7 @@ trait EntitySpecificationRepositoryTrait
      * Get single result when you match with a Specification.
      *
      * @param Filter|QueryModifier $specification
-     * @param ResultModifier       $modifier
+     * @param ResultModifier|null  $modifier
      *
      * @throw Exception\NonUniqueException  If more than one result is found
      * @throw Exception\NoResultException   If no results found
@@ -62,7 +63,7 @@ trait EntitySpecificationRepositoryTrait
      * Get single result or null when you match with a Specification.
      *
      * @param Filter|QueryModifier $specification
-     * @param ResultModifier       $modifier
+     * @param ResultModifier|null  $modifier
      *
      * @throw Exception\NonUniqueException  If more than one result is found
      *
@@ -81,9 +82,9 @@ trait EntitySpecificationRepositoryTrait
      * Prepare a Query with a Specification.
      *
      * @param Filter|QueryModifier $specification
-     * @param ResultModifier       $modifier
+     * @param ResultModifier|null  $modifier
      *
-     * @return \Doctrine\ORM\Query
+     * @return Query
      */
     public function getQuery($specification, ResultModifier $modifier = null)
     {
@@ -91,11 +92,25 @@ trait EntitySpecificationRepositoryTrait
         $this->applySpecification($qb, $specification);
         $query = $qb->getQuery();
 
-        if ($modifier !== null) {
+        if (null !== $modifier) {
             $modifier->modify($query);
         }
 
         return $query;
+    }
+
+    /**
+     * @param Filter|QueryModifier $specification
+     * @param string|null          $alias
+     *
+     * @return QueryBuilder
+     */
+    public function getQueryBuilder($specification, $alias = null)
+    {
+        $qb = $this->createQueryBuilder($alias ?: $this->getAlias());
+        $this->applySpecification($qb, $specification, $alias);
+
+        return $qb;
     }
 
     /**

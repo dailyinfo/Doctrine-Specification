@@ -15,11 +15,17 @@ use Happyr\DoctrineSpecification\ValueConverter;
 class Comparison implements Filter
 {
     const EQ = '=';
+
     const NEQ = '<>';
+
     const LT = '<';
+
     const LTE = '<=';
+
     const GT = '>';
+
     const GTE = '>=';
+
     const LIKE = 'LIKE';
     const MEMBER_OF = 'MEMBER OF';
 
@@ -87,7 +93,7 @@ class Comparison implements Filter
      */
     public function getFilter(QueryBuilder $qb, $dqlAlias)
     {
-        if ($this->dqlAlias !== null) {
+        if (null !== $this->dqlAlias) {
             $dqlAlias = $this->dqlAlias;
         }
 

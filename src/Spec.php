@@ -24,6 +24,7 @@ use Happyr\DoctrineSpecification\Query\Limit;
 use Happyr\DoctrineSpecification\Query\Offset;
 use Happyr\DoctrineSpecification\Query\OrderBy;
 use Happyr\DoctrineSpecification\Query\OrderByRand;
+use Happyr\DoctrineSpecification\Query\QueryModifier;
 use Happyr\DoctrineSpecification\Query\Slice;
 use Happyr\DoctrineSpecification\Result\AsArray;
 use Happyr\DoctrineSpecification\Result\AsSingleScalar;
@@ -402,11 +403,11 @@ class Spec
      */
 
     /**
-     * @param Specification $spec
+     * @param Filter|QueryModifier $spec
      *
      * @return CountOf
      */
-    public static function countOf(Specification $spec)
+    public static function countOf($spec)
     {
         return new CountOf($spec);
     }
