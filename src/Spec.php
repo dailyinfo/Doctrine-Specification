@@ -17,6 +17,7 @@ use Happyr\DoctrineSpecification\Logic\Not;
 use Happyr\DoctrineSpecification\Logic\OrX;
 use Happyr\DoctrineSpecification\Query\AddSelect;
 use Happyr\DoctrineSpecification\Query\GroupBy;
+use Happyr\DoctrineSpecification\Query\IndexBy;
 use Happyr\DoctrineSpecification\Query\InnerJoin;
 use Happyr\DoctrineSpecification\Query\Join;
 use Happyr\DoctrineSpecification\Query\LeftJoin;
@@ -25,6 +26,7 @@ use Happyr\DoctrineSpecification\Query\Offset;
 use Happyr\DoctrineSpecification\Query\OrderBy;
 use Happyr\DoctrineSpecification\Query\OrderByRand;
 use Happyr\DoctrineSpecification\Query\QueryModifier;
+use Happyr\DoctrineSpecification\Query\SelectionSet;
 use Happyr\DoctrineSpecification\Query\Slice;
 use Happyr\DoctrineSpecification\Result\AsArray;
 use Happyr\DoctrineSpecification\Result\AsSingleScalar;
@@ -113,6 +115,29 @@ class Spec
     public static function innerJoin($field, $newAlias, $dqlAlias = null)
     {
         return new InnerJoin($field, $newAlias, $dqlAlias);
+    }
+
+    /**
+     * @param string $field
+     * @param string $dqlAlias
+     *
+     * @return IndexBy
+     */
+    public static function indexBy($field, $dqlAlias = null)
+    {
+        return new IndexBy($field, $dqlAlias);
+    }
+
+    /**
+     * @param string[]|string $fields
+     * @param bool            $replace
+     * @param null            $dqlAlias
+     *
+     * @return SelectionSet
+     */
+    public static function selectionSet($fields, $replace = false, $dqlAlias = null)
+    {
+        return new SelectionSet($fields, $replace, $dqlAlias);
     }
 
     /**
